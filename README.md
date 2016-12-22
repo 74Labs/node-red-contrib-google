@@ -1,2 +1,2 @@
 # node-red-contrib-google
-Google APIs nodes for Node-RED
+Node-RED node for Google APIs, wrapper for [google-api-nodejs-client](https://github.com/google/google-api-nodejs-client)
