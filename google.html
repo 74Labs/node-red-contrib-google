@@ -1,0 +1,166 @@
+<script type="text/javascript">
+    RED.nodes.registerType('google conn', {
+        category: 'config',
+        defaults: {
+            name: {
+                value: "Google",
+                required: true
+            },
+            key: {
+                value: "{}",
+                required: true
+            },
+            scopes: {
+                value: "",
+                required: true
+            }
+        },
+        inputs: 0,
+        outputs: 0,
+        label: function() {
+            return this.name || "Google API";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="google conn">
+    <div class="form-row">
+        <label for="node-config-input-name">
+            <i class="icon-bookmark"></i>
+            Name</label>
+        <input type="text" id="node-config-input-name"/>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-key">
+            <i class="fa fa-fw fa-key"></i>
+            JSON Key</label>
+        <textarea id="node-config-input-key" rows="20" style="width: 100%"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-scopes">
+            <i class="fa fa-fw fa-list"></i>
+            Scopes</label>
+        <textarea id="node-config-input-scopes" rows="10" style="width: 100%"></textarea>
+    </div>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('google', {
+        category: 'function',
+        color: '#FFCC66',
+        icon: 'google.png',
+        defaults: {
+            name: {
+                value: ""
+            },
+            google: {
+                type: "google conn"
+            },
+            api: {
+                type: ""
+            },
+            operation: {
+                type: ""
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        label: function() {
+            return this.name || "google";
+        },
+        oneditprepare: function oneditprepare() {
+
+            var node = this;
+            var selectAPI = $('#node-input-api');
+            var selectOperation = $('#node-input-operation');
+            var scopesInfo = $('#node-scopes-info');
+
+            selectAPI.change(function() {
+
+                scopesInfo.empty();
+                selectOperation.children().not('#node-input-dynamic-operation').remove();
+                var api = selectAPI.val();
+
+                if (api) {
+                    $.getJSON("google/apis/" + api + "/info", function(data) {
+                        selectOperation.children().last().after(data.operations.map(function(d) {
+                            return $('<option></option>').attr('value', d).attr('selected', node.operation === d).text(d).wrap('<p/>').parent().html();
+                        }).join(""));
+                        if (data.operations.indexOf(node.operation) < 0) {
+                            $('#node-input-dynamic-operation').attr('selected', true);
+                        };
+                        $.each(data.scopes, function(i, v) {
+                            scopesInfo.append($('<li></li>').text(v));
+                        });
+                    });
+                } else {
+                    $('#node-input-dynamic-operation').attr('selected', true);
+                }
+                selectOperation.change();
+            });
+
+            $.getJSON("google/apis", function(data) {
+                selectAPI.children().last().after(data.map(function(d) {
+                    return $('<option></option>').attr('value', d).attr('selected', node.api === d).text(d).wrap('<p/>').parent().html();
+                }).join(""));
+                if (data.indexOf(node.api) < 0) {
+                    $('#node-input-dynamic-api').attr('selected', true);
+                }
+                selectAPI.change();
+            });
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="google">
+    <div class="form-row">
+        <label for="node-input-name">
+            <i class="icon-tag"></i>
+            Name</label>
+        <input type="text" id="node-input-name" placeholder="Name"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-google">
+            <i class="fa fa-google"></i>
+            Connection</label>
+        <input type="text" id="node-input-google"/>
+    </div>
+    <div class="form-row">
+        <label for="node-input-api">
+            <i class="fa fa-wrench"></i>
+            API</label>
+        <select type="text" id="node-input-api" style="display: inline-block;">
+            <option value="" id="node-input-dynamic-api" style="font-style: italic;">Dynamic (msg.api)</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-operation">
+            <i class="fa fa-wrench"></i>
+            Operation</label>
+        <select type="text" id="node-input-operation" style="display: inline-block; vertical-align: top;">
+            <option value="" id="node-input-dynamic-operation" style="font-style: italic;">Dynamic (msg.operation)</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-scopes-info">Operation Scopes</label>
+        <ul id="node-scopes-info"></ul>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="google">
+    <p>A node that calls method of Google API.</p>
+    <p>API and operation selection can be made via node configuration or values passed in
+        <b>msg.google.api</b>
+        and/or
+        <b>msg.google.operation</b>.</p>
+    <p>Params for call are passed via
+        <b>msg.payload</b>.</p>
+    <p>The result is returned in
+        <b>msg.payload</b>.</p>
+    <p>See the
+        <a href="https://github.com/google/google-api-nodejs-client" target="_blank">
+            <i>google-api-nodejs-client</i>
+        </a>
+        for available APIs and operations.</p>
+</script>

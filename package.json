@@ -1,0 +1,20 @@
+{
+  "name": "node-red-contrib-google",
+  "version": "0.0.1",
+  "description": "Node-RED node for Google APIs call.",
+  "dependencies": {
+    "googleapis": "^15.0.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node-red","google","googleapis"
+  ],
+  "node-red": {
+    "nodes": {
+      "google": "./google.js",
+    }
+  },
+  "author": {
+    "name": "Tom Stanczyk"
+  }
+}
