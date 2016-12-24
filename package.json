@@ -11,10 +11,14 @@
   ],
   "node-red": {
     "nodes": {
-      "google": "./google.js",
+      "google": "./google.js"
     }
   },
   "author": {
     "name": "Tom Stanczyk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/74Labs/node-red-contrib-google"
   }
 }
