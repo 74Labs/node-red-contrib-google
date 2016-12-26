@@ -2,6 +2,12 @@
 
 Node-RED node for Google APIs. 
 
+## Work in Progress
+
+Changes are coming.
+
+Configuration node name was changed at v.0.1.0: _google conn_ -> _google-conn_
+
 ## Features
 
 This node is a wrapper for official Google APIs Node.js Client: [google-api-nodejs-client](https://github.com/google/google-api-nodejs-client).
@@ -23,7 +29,7 @@ npm install -g node-red-contrib-google
 
 ## Using the Node
 
-Generate service account key at [Google API Console](https://console.developers.google.com/apis/credentials/serviceaccountkey).
-  Choose JSON type and save service key file.
-  Paste content of that file into JSON Key field of your _google-conn_ node.
+* Generate service account key at [Google API Console](https://console.developers.google.com/apis/credentials/serviceaccountkey).
+  * Choose JSON type and save service key file.
+  * Paste content of that file into JSON Key field of your _google-conn_ node.
   
