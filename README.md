@@ -29,7 +29,7 @@ or for a global installation
 npm install -g node-red-contrib-google
 ```
 
-## Using the Node
+## Configuration
 
 1. Generate service account key at [Google API Console](https://console.developers.google.com/apis/credentials/serviceaccountkey).
 
