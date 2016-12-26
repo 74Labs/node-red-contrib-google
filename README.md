@@ -1,7 +1,5 @@
 # Generic Google API Client for Node-RED
 
-[![npm version][npmimg]][npm]
-
 Node-RED node for Google APIs. 
 
 ## Features
