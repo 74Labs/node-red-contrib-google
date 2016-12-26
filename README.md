@@ -12,7 +12,9 @@ Configuration node name was changed at v.0.1.0: _google conn_ -> _google-conn_
 
 This node is a wrapper for official Google APIs Node.js Client: [google-api-nodejs-client](https://github.com/google/google-api-nodejs-client).
 
-List of available APIs are provided online via [Google API Discovery Service](https://developers.google.com/discovery/).
+List of available APIs are delivered online via [Google API Discovery Service](https://developers.google.com/discovery/).
+
+Package contains two nodes. There is configuration node made for maintaining connection to Google API Services (_google-conn_) and regular node providing posibility to call any method of any API exposed via official Google's Node.js Client.
 
 ## How to Install
 
