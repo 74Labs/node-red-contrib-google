@@ -29,7 +29,7 @@ npm install -g node-red-contrib-google
 
 ## Using the Node
 
-* Generate service account key at [Google API Console](https://console.developers.google.com/apis/credentials/serviceaccountkey).
+1. Generate service account key at [Google API Console](https://console.developers.google.com/apis/credentials/serviceaccountkey).
 
   * Choose JSON type and save service key file.
   * Paste content of that file into JSON Key field of your _google-conn_ node.
