@@ -4,7 +4,7 @@ Node-RED node for Google APIs.
 
 ## Features
 
-This node is a wrapper for official Google APIs Node.js Client: [google-api-nodejs-client](https://github.com/google/google-api-nodejs-client). For now only "Server-to-server interaction" is implemented.
+This node is a wrapper for official Google APIs Node.js Client: [google-api-nodejs-client](https://github.com/google/google-api-nodejs-client).
 
 List of available APIs are provided online via [Google API Discovery Service](https://developers.google.com/discovery/).
 
