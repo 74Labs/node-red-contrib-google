@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    RED.nodes.registerType('google conn', {
+    RED.nodes.registerType('google-conn', {
         category: 'config',
         defaults: {
             name: {
@@ -23,7 +23,7 @@
     });
 </script>
 
-<script type="text/x-red" data-template-name="google conn">
+<script type="text/x-red" data-template-name="google-conn">
     <div class="form-row">
         <label for="node-config-input-name">
             <i class="icon-bookmark"></i>
@@ -54,7 +54,7 @@
                 value: ""
             },
             google: {
-                type: "google conn"
+                type: "google-conn"
             },
             api: {
                 type: ""
@@ -143,7 +143,7 @@
         </select>
     </div>
     <div class="form-row">
-        <label for="node-scopes-info">Operation Scopes</label>
+        <label for="node-scopes-info">API Scopes</label>
         <ul id="node-scopes-info"></ul>
     </div>
 </script>
@@ -161,6 +161,6 @@
     <p>See the
         <a href="https://github.com/google/google-api-nodejs-client" target="_blank">
             <i>google-api-nodejs-client</i>
-        </a>
+        </a> and <a href="https://developers.google.com/discovery/" target="_blank"><i>Google API Discovery Service</i></a>
         for available APIs and operations.</p>
 </script>

@@ -170,7 +170,7 @@ module.exports = function(RED) {
         });
     }
 
-    RED.nodes.registerType("google conn", GoogleConnectionNode);
+    RED.nodes.registerType("google-conn", GoogleConnectionNode);
     RED.nodes.registerType("google", GoogleNode);
 
 };
