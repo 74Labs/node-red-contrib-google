@@ -1,10 +1,12 @@
 # Generic Google API Client for Node-RED
 
+[![npm version][npmimg]][npm]
+
 Node-RED node for Google APIs. 
 
-[![NPM](https://nodei.co/npm/node-red-contrib-google.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/node-red-contrib-google/)
+## Features
 
-A wrapper for [google-api-nodejs-client](https://github.com/google/google-api-nodejs-client).
+This node is a wrapper for official Google APIs Node.js Client: [google-api-nodejs-client](https://github.com/google/google-api-nodejs-client). For now only "Server-to-server interaction" is implemented.
 
 List of available APIs are provided online via [Google API Discovery Service](https://developers.google.com/discovery/).
 
