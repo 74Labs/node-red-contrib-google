@@ -58,7 +58,7 @@ module.exports = function(RED) {
                 }
                 if (d.resources) {
                     Object.keys(d.resources).forEach(function(k) {
-                        processResources(d.resources[k], k);
+                        processResources(d.resources[k], prefix + k);
                     });
                 }
             }
