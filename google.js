@@ -14,15 +14,15 @@ module.exports = function(RED) {
         };
     }
 
-    var google = require('googleapis');
-    var discovery = google.discovery('v1');
+    var { google } = require('googleapis');
+    var discovery = google.discovery({ version: 'v1' });
 
     RED.httpAdmin.get('/google/apis', function(req, res) {
         discovery.apis.list({
             fields: "items(name,version)"
         }, function(err, data) {
             var response = [];
-            data.items.forEach(function(v) {
+            data.data.items.forEach(function(v) {
                 response.push(encodeAPI(v.name, v.version));
             });
             response.sort();
@@ -63,10 +63,10 @@ module.exports = function(RED) {
                 }
             }
 
-            processResources(data);
+            processResources(data.data);
 
             response.operations.sort();
-            response.scopes = Object.keys(data.auth.oauth2.scopes);
+            response.scopes = Object.keys(data.data.auth.oauth2.scopes);
 
             res.json(response);
 

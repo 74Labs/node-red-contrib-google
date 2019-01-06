@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "Node-RED node for Google APIs call.",
   "dependencies": {
-    "googleapis": "^15.0.0"
+    "googleapis": "^36.0.0"
   },
   "license": "MIT",
   "keywords": [
