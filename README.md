@@ -17,12 +17,12 @@ Package contains two nodes. There is configuration node made for maintaining con
 Run the following command in the root directory of your Node-RED install
 
 ```
-npm install node-red-contrib-google
+npm install node-red-contrib-google-oauth2
 ```
 
 or for a global installation
 ```
-npm install -g node-red-contrib-google
+npm install -g node-red-contrib-google-oauth2
 ```
 
 ## Configuration
