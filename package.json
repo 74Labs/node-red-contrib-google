@@ -13,7 +13,8 @@
   ],
   "node-red": {
     "nodes": {
-      "google": "./google.js"
+      "google": "./google.js",
+      "google-credentials": "./google-auth.js"
     }
   },
   "author": {
