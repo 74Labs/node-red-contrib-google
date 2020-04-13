@@ -139,7 +139,7 @@ module.exports = function(RED) {
                 });
 
                 msg.payload = res;
-
+                delete msg.payload.request
                 node.send(msg);
             });
 
