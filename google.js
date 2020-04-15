@@ -137,9 +137,7 @@ module.exports = function(RED) {
                     shape: 'dot',
                     text: 'success'
                 });
-
-                msg.payload = res;
-                delete msg.payload.request
+                msg.payload = res.data;
                 node.send(msg);
             });
 
