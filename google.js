@@ -120,8 +120,7 @@ module.exports = function(RED) {
                 operation = operation[val];
             });
 
-            operation(msg.payload, function(err, res) {
-
+            operation.bind(api)(msg.payload, function(err, res) {
                 if (err) {
                     node.status({
                         fill: 'red',
