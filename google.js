@@ -127,7 +127,7 @@ module.exports = function(RED) {
                         shape: 'dot',
                         text: 'error'
                     });
-                    node.error(err);
+                    node.error(err,msg);
                     return;
                 }
 
