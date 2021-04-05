@@ -14,15 +14,15 @@ module.exports = function(RED) {
         };
     }
 
-    var google = require('googleapis');
-    var discovery = google.discovery('v1');
+    var { google } = require('googleapis');
+    var discovery = google.discovery({ version: 'v1' });
 
     RED.httpAdmin.get('/google/apis', function(req, res) {
         discovery.apis.list({
             fields: "items(name,version)"
         }, function(err, data) {
             var response = [];
-            data.items.forEach(function(v) {
+            data.data.items.forEach(function(v) {
                 response.push(encodeAPI(v.name, v.version));
             });
             response.sort();
@@ -63,34 +63,15 @@ module.exports = function(RED) {
                 }
             }
 
-            processResources(data);
+            processResources(data.data);
 
             response.operations.sort();
-            response.scopes = Object.keys(data.auth.oauth2.scopes);
+            response.scopes = Object.keys(data.data.auth.oauth2.scopes);
 
             res.json(response);
 
         });
     });
-
-    function GoogleConnectionNode(config) {
-        var auth = null;
-        RED.nodes.createNode(this, config);
-        this.key = JSON.parse(config.key);
-        this.scopes = config.scopes;
-        this.getAuth = function() {
-          if(!auth) {
-            auth = new google.auth.JWT(
-                this.key.client_email,
-                null,
-                this.key.private_key,
-                this.scopes.split('\n'),
-                null
-            );
-          }
-          return auth;
-        };
-    }
 
     function GoogleNode(config) {
 
@@ -101,6 +82,24 @@ module.exports = function(RED) {
         node.operation = config.operation;
         node.scopes = config.scopes;
 
+        const oauth2Client = new google.auth.OAuth2(
+            node.config.credentials.clientId,
+            node.config.credentials.clientSecret
+        );
+        oauth2Client.setCredentials({
+            access_token: node.config.credentials.accessToken,
+            refresh_token: node.config.credentials.refreshToken,
+            scope: node.config.scopes.replace(/\n/g, " "),
+            token_type: node.config.credentials.tokenType,
+            expiry_date: node.config.credentials.expireTime 
+        });
+        oauth2Client.on('tokens', (tokens) => {
+            if (tokens.refresh_token) {
+                node.config.credentials.refreshToken = tokens.refresh_token;
+                RED.nodes.addCredentials(config.google, node.config.credentials);
+            }
+        });
+
         node.on('input', function(msg) {
 
             node.status({
@@ -109,68 +108,41 @@ module.exports = function(RED) {
                 text: 'pending'
             });
 
-            // var jwt = new google.auth.JWT(
-            //     node.config.client_email,
-            //     null,
-            //     node.config.private_key,
-            //     node.scopes.split('\n'),
-            //     null
-            // );
-
-            var auth = node.config.getAuth();
-
             var api = decodeAPI(node.api);
             api = google[api.name]({
                 version: api.version,
-                auth: auth
+                auth: oauth2Client
             });
 
-            auth.authorize(function(err, tokens) {
+            var props = node.operation.split('.');
+            var operation = api;
+            props.forEach(function(val) {
+                operation = operation[val];
+            });
 
+            operation.bind(api)(msg.payload, function(err, res) {
                 if (err) {
                     node.status({
                         fill: 'red',
                         shape: 'dot',
                         text: 'error'
                     });
-                    node.error(err);
+                    node.error(err,msg);
                     return;
                 }
 
-                var props = node.operation.split('.');
-                var operation = api;
-                props.forEach(function(val) {
-                    operation = operation[val];
+                node.status({
+                    fill: 'yellow',
+                    shape: 'dot',
+                    text: 'success'
                 });
-
-                operation(msg.payload, function(err, res) {
-
-                    if (err) {
-                        node.status({
-                            fill: 'red',
-                            shape: 'dot',
-                            text: 'error'
-                        });
-                        node.error(err);
-                        return;
-                    }
-
-                    node.status({
-                        fill: 'yellow',
-                        shape: 'dot',
-                        text: 'success'
-                    });
-
-                    msg.payload = res;
-
-                    node.send(msg);
-                });
+                msg.payload = res.data;
+                node.send(msg);
             });
 
         });
     }
 
-    RED.nodes.registerType("google-conn", GoogleConnectionNode);
     RED.nodes.registerType("google", GoogleNode);
 
 };

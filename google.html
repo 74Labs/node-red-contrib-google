@@ -1,50 +1,4 @@
 <script type="text/javascript">
-    RED.nodes.registerType('google-conn', {
-        category: 'config',
-        defaults: {
-            name: {
-                value: "Google",
-                required: true
-            },
-            key: {
-                value: "{}",
-                required: true
-            },
-            scopes: {
-                value: "",
-                required: true
-            }
-        },
-        inputs: 0,
-        outputs: 0,
-        label: function() {
-            return this.name || "Google API";
-        }
-    });
-</script>
-
-<script type="text/x-red" data-template-name="google-conn">
-    <div class="form-row">
-        <label for="node-config-input-name">
-            <i class="icon-bookmark"></i>
-            Name</label>
-        <input type="text" id="node-config-input-name"/>
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-key">
-            <i class="fa fa-fw fa-key"></i>
-            JSON Key</label>
-        <textarea id="node-config-input-key" rows="20" style="width: 100%"></textarea>
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-scopes">
-            <i class="fa fa-fw fa-list"></i>
-            Scopes</label>
-        <textarea id="node-config-input-scopes" rows="10" style="width: 100%"></textarea>
-    </div>
-</script>
-
-<script type="text/javascript">
     RED.nodes.registerType('google', {
         category: 'function',
         color: '#FFCC66',
@@ -54,7 +8,8 @@
                 value: ""
             },
             google: {
-                type: "google-conn"
+                type: "google-credentials",
+                required: true
             },
             api: {
                 type: ""

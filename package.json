@@ -1,26 +1,33 @@
 {
-  "name": "node-red-contrib-google",
-  "version": "0.2.0",
-  "description": "Node-RED node for Google APIs call.",
+  "name": "node-red-contrib-google-oauth2",
+  "version": "0.3.2",
+  "description": "Node-RED node for Google APIs call using OAuth2.",
   "dependencies": {
-    "googleapis": "^15.0.0"
+    "googleapis": "^64.0.0"
   },
   "license": "MIT",
   "keywords": [
     "node-red",
     "google",
-    "googleapis"
+    "googleapis",
+    "oauth2"
   ],
   "node-red": {
     "nodes": {
-      "google": "./google.js"
+      "google": "./google.js",
+      "google-credentials": "./google-auth.js"
     }
   },
   "author": {
     "name": "Tom Stanczyk"
   },
+  "contributors": [
+    {
+      "name": "Patrick Hieber"
+    }
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/74Labs/node-red-contrib-google"
+    "url": "https://github.com/pckhib/node-red-contrib-google-oauth2"
   }
 }
